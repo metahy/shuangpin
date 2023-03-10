@@ -2,6 +2,8 @@ package cn.hyleon;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.*;
+
 class MainTest {
 
     @Test
@@ -20,5 +22,23 @@ class MainTest {
             }
         }
         System.out.println();
+    }
+
+    @Test
+    public void prepareDic() throws IOException {
+        File file = new File("/home/hyleon/IdeaProjects/shuangpin/src/main/resources/shuangpin.dic");
+        FileReader fileReader = new FileReader(file);
+        BufferedReader bufferedReader = new BufferedReader(fileReader);
+        String s = bufferedReader.readLine();
+        fileReader.close();
+        System.out.println(s);
+
+        FileWriter fileWriter = new FileWriter(file);
+        char[] chars = s.toCharArray();
+        for (char c : chars) {
+            fileWriter.write(c);
+            fileWriter.write('\n');
+        }
+        fileWriter.close();
     }
 }
