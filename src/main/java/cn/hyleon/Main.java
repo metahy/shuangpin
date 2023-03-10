@@ -98,7 +98,7 @@ public class Main {
         }
 
         System.out.println("=> Result: (" + (total - wrong) + "/" + total + ") - " +
-                "Spent: " + (timeStart != null ? (System.currentTimeMillis() - timeStart) / 1000 : 0) + "s \n");
+                "Spent: " + (timeStart != null ? (System.currentTimeMillis() - timeStart) / 1000.0 : 0) + "s \n");
 
         System.out.println("===== END =====");
     }
