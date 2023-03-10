@@ -22,17 +22,20 @@ public class Main {
     public static void main(String[] args) {
         System.out.println("====== Shuangpin Practice Program =====");
         int dicSize = DIC.size();
-        System.out.println("-> Loading dictionary...[" + dicSize + "]");
+        System.out.println("-> Loading dictionary...  Total:[" + dicSize + "]");
 
-        System.out.println("[[Notice: Enter -> start, Space+Enter -> end, Enter -> jump to next word(after start)]]");
+        System.out.println("[[Notice: Enter -> start, [`] -> end, [;] -> skip word]]");
 
         boolean start = false;
         Long timeStart = null;
         System.out.println("-> Press Enter to Start...");
         while (!start) {
-            if ("".equals(scanner.nextLine())) {
+            String s = scanner.nextLine();
+            if ("".equals(s)) {
                 start = true;
                 timeStart = System.currentTimeMillis();
+            } else if ("`".equals(s)) {
+                break;
             } else {
                 System.out.println("-> Press Enter to Start...");
             }
@@ -42,9 +45,17 @@ public class Main {
         while (start) {
             Pair<String, String> pair = DIC.get(random.nextInt(dicSize));
             System.out.println("Target: " + pair.getKey());
+
             while (scanner.hasNext()) {
                 String guess = scanner.nextLine();
-                if (guess.equals("E")) {
+                while ("".equals(guess)) {
+                    guess = scanner.nextLine();
+                }
+
+                if (";".equals(guess)) {
+                    System.out.println("Jump...");
+                    break;
+                } else if ("`".equals(guess)) {
                     start = false;
                     break;
                 }
@@ -52,6 +63,7 @@ public class Main {
                 total++;
 
                 if (guess.equals(pair.getValue())) {
+                    System.out.println("√");
                     break;
                 } else {
                     wrong++;
@@ -61,8 +73,8 @@ public class Main {
             }
         }
 
-        System.out.println("=> Result");
-        System.out.println("(" + (total - wrong) + "/" + total + ") - Spent: " + (System.currentTimeMillis() - timeStart) / 1000 + "s \n");
+        System.out.println("=> Result: (" + (total - wrong) + "/" + total + ") - " +
+                "Spent: " + (timeStart != null ? (System.currentTimeMillis() - timeStart) / 1000 : 0) + "s \n");
 
         System.out.println("===== END =====");
     }
